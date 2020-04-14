@@ -14,7 +14,7 @@ mongoose.connect(
   }
 );
 
-const userRouter = require("./route/User");
+const userRouter = require("./routes/User");
 
 app.use("/user", userRouter);
 
