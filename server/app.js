@@ -14,20 +14,9 @@ mongoose.connect(
   }
 );
 
-const User = require("./models/User");
+const userRouter = require("./route/User");
 
-const userInput = {
-  username: "maddealer",
-  password: "1234567",
-  role: "admin",
-};
-
-const user = new User(userInput);
-
-user.save((err, document) => {
-  if (err) console.log(err);
-  console.log(document);
-});
+app.use("/user", userRouter);
 
 app.listen(5000, () => {
   console.log("Server started ;)");
