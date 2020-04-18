@@ -1,0 +1,76 @@
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import AuthService from "../Services/AuthService";
+import { AuthContext } from "./../Context/AuthContext";
+
+const Navbar = (props) => {
+  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(
+    AuthContext
+  );
+
+  const onClickLogoutHandler = () => {
+    AuthService.logout().then((data) => {
+      if (data.success) {
+        setUser(data.user);
+        setIsAuthenticated(false);
+      }
+    });
+  };
+
+  const unauthentcatedNavbar = () => {
+    return (
+      <>
+        <Link to="/">
+          <li className="nav-item nav-link">Home</li>
+        </Link>
+        <Link to="/login">
+          <li className="nav-item nav-link">Login</li>
+        </Link>
+        <Link to="/register">
+          <li className="nav-item nav-link">Register</li>
+        </Link>
+      </>
+    );
+  };
+
+  const authenticatedNavbar = () => {
+    return (
+      <>
+        <Link to="/">
+          <li className="nav-item nav-link">Home</li>
+        </Link>
+        <Link to="/todos">
+          <li className="nav-item nav-link">Todos</li>
+        </Link>
+        {user.role === "admin" ? (
+          <Link to="/admin">
+            <li className="nav-item nav-link">Admin</li>
+          </Link>
+        ) : null}
+        <button
+          type="button"
+          className="btn btn-link nav-item nav-link "
+          onClick={onClickLogoutHandler}
+        >
+          Logout
+        </button>
+      </>
+    );
+  };
+
+  return (
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <Link to="/">
+        <div className="navbar-brand">maddealer</div>
+      </Link>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          {!isAuthenticated ? unauthentcatedNavbar() : authenticatedNavbar()}
+        </ul>
+        <span class="navbar-text">Navbar text with an inline element</span>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
