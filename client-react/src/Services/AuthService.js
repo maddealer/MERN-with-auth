@@ -7,7 +7,17 @@ export default {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          console.log("ne moje da vleze6");
+          return {
+            isAuthenticated: false,
+            user: { username: "", role: "" },
+            message: { msgBody: "Wrong credentials", msgError: true },
+          };
+        }
+        return res.json();
+      })
       .then((data) => data);
   },
   register: (user) => {
@@ -23,9 +33,7 @@ export default {
   },
   logout: () => {
     return fetch("/user/logout")
-      .then((res) => {
-        res.json();
-      })
+      .then((res) => res.json())
       .then((data) => data);
   },
   isAuthenticated: () => {

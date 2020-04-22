@@ -36,7 +36,9 @@ passport.use(
       if (err) return done(err);
 
       //if no user exist
-      if (!user) return done(null, false);
+      if (!user) {
+        return done(null, false);
+      }
 
       //check if password is correct
       user.comparePassword(password, done);

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+
 import { Link } from "react-router-dom";
 import AuthService from "../Services/AuthService";
 import { AuthContext } from "./../Context/AuthContext";
@@ -47,13 +48,15 @@ const Navbar = (props) => {
             <li className="nav-item nav-link">Admin</li>
           </Link>
         ) : null}
-        <button
-          type="button"
-          className="btn btn-link nav-item nav-link "
-          onClick={onClickLogoutHandler}
-        >
-          Logout
-        </button>
+        <Link to="/">
+          <button
+            type="button"
+            className="btn btn-link nav-item nav-link "
+            onClick={onClickLogoutHandler}
+          >
+            Logout
+          </button>
+        </Link>
       </>
     );
   };

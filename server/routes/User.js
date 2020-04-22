@@ -59,6 +59,10 @@ userRouter.post(
       const token = signToken(_id);
       res.cookie("access_token", token, { httpOnly: true, sameSite: true });
       res.status(200).json({ isAuthenticated: true, user: { username, role } });
+    } else {
+      res.status(500).json({
+        message: { msgBody: "Error has occured", msgError: true },
+      });
     }
   }
 );
